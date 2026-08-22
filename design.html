@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Referencia visual del sistema de diseño de Karina Gutiérrez Rangel: paleta, tipografía, espaciado, formas, profundidad y componentes.">
+<title>Design System — Karina Gutiérrez Rangel</title>
+<style>
+  /* ============================================================
+     TOKENS — tomados de DESIGN.md (front matter YAML)
+     ============================================================ */
+  :root{
+    /* colors */
+    --primary:        #882435;   /* colors.primary */
+    --secondary:      #AE5362;   /* colors.secondary */
+    --link:           #0088CC;   /* colors.link */
+    --button-secondary:#AAC5B4;  /* colors.button-secondary */
+    --on-surface:     #451A14;   /* colors.on-surface */
+    --text-tertiary:  #808080;   /* colors.text-tertiary */
+    --surface:        #F7F4D5;   /* colors.surface */
+    --overlay:        rgba(136,36,53,0.45); /* colors.overlay — REVISAR */
+
+    /* spacing */
+    --base:   8px;               /* spacing.base */
+    --s-xs:   4px;
+    --s-sm:   8px;
+    --s-md:   16px;
+    --s-lg:   24px;
+    --s-xl:   32px;
+    --s-xxl:  64px;
+    --gutter: 24px;              /* spacing.gutter — REVISAR */
+    --section: 64px;             /* spacing.section — REVISAR */
+    --content-max: 1280px;       /* spacing.content-max */
+
+    /* rounded */
+    --r-none: 0px;               /* rounded.none */
+    --r-full: 50%;               /* rounded.full */
+
+    /* elevation — REVISAR */
+    --shadow-anchor: 0 4px 12px rgba(0,0,0,0.15);
+
+    /* focus */
+    --focus: 3px solid var(--link);
+  }
+
+  /* @font-face — fuentes locales de assets/fonts */
+  @font-face{
+    font-family:"PerecScripte2";
+    src:url("assets/fonts/PeregroyJF Regular.woff") format("woff");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Neue Haas Grotesk Display Pro";
+    src:url("assets/fonts/NeueHaasDisplayRoman.woff") format("woff");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Neue Haas Grotesk Display Pro";
+    src:url("assets/fonts/NeueHaasDisplayMediu.woff") format("woff");
+    font-weight:500; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Neue Haas Grotesk Display Pro";
+    src:url("assets/fonts/NeueHaasDisplayBold.woff") format("woff");
+    font-weight:700; font-style:normal; font-display:swap;
+  }
+
+  /* ============================================================
+     BASE
+     ============================================================ */
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:"Neue Haas Grotesk Display Pro","Segoe UI",system-ui,Arial,sans-serif;
+    font-size:20px;                    /* typography.body.fontSize */
+    font-weight:400;
+    line-height:30px;                  /* typography.body.lineHeight */
+    color:var(--on-surface);
+    background:var(--surface);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{ display:block; max-width:100%; }
+
+  :focus-visible{
+    outline:var(--focus);
+    outline-offset:3px;
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px;
+    padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  /* Tipografía base según tokens */
+  .t-display{ font-family:"PerecScripte2",cursive; font-size:40px; line-height:48px; font-weight:400; }
+  .t-h1{ font-size:40px; line-height:48px; font-weight:700; }
+  .t-h2{ font-size:40px; line-height:48px; font-weight:400; }
+  .t-h3{ font-size:16px; line-height:24px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; }
+  .t-body{ font-size:20px; line-height:30px; font-weight:400; }
+  .t-list{ font-size:20px; line-height:30px; font-weight:500; }
+  .t-small{ font-size:16px; line-height:24px; font-weight:400; }
+  .t-label{ font-family:"PerecScripte2",cursive; font-size:19.216px; line-height:24px; font-weight:400; }
+  .t-link{ font-size:20px; line-height:30px; font-weight:400; }
+
+  /* ============================================================
+     LAYOUT GENERAL — rejilla intervenida
+     ============================================================ */
+  .container{
+    max-width:var(--content-max);
+    margin-inline:auto;
+    padding-inline:var(--gutter);
+  }
+
+  section{ scroll-margin-top:84px; }
+
+  /* Bloques full-bleed: láminas de color sólido */
+  .block{
+    padding-block:var(--s-xxl);
+  }
+  .block--surface{ background:var(--surface); }
+  .block--primary{ background:var(--primary); }
+  .block--cafe{ background:var(--on-surface); }
+
+  /* Texto sobre colores */
+  .block--primary, .block--cafe{ color:var(--surface); }
+  .block--primary .t-h3, .block--cafe .t-h3{ color:var(--surface); }
+  .block--primary a, .block--cafe a{ color:#ffffff; text-decoration-color:#ffffff; }
+
+  .sec-head{
+    display:grid; gap:var(--s-sm);
+    margin-bottom:var(--s-xl);
+  }
+  .sec-num{
+    font-family:"PerecScripte2",cursive;
+    font-size:40px; line-height:48px;
+    color:var(--secondary);
+  }
+  .block--primary .sec-num, .block--cafe .sec-num{ color:#F1C0C0; }
+
+  /* ============================================================
+     HEADER / NAV
+     ============================================================ */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--surface);
+    border-bottom:4px solid var(--primary);
+  }
+  .site-header .container{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:var(--s-md); min-height:64px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:var(--s-sm);
+    text-decoration:none; color:var(--on-surface);
+  }
+  .brand__mark{
+    width:36px; height:36px; border-radius:var(--r-full);
+    background:var(--primary); color:var(--surface);
+    display:grid; place-items:center;
+    font-family:"PerecScripte2",cursive; font-size:20px;
+  }
+  .brand__name{ font-family:"PerecScripte2",cursive; font-size:24px; line-height:30px; }
+
+  .site-nav ul{
+    list-style:none; display:flex; flex-wrap:wrap; gap:var(--s-md);
+  }
+  .site-nav a{
+    color:var(--on-surface); text-decoration:none;
+    font-size:16px; line-height:24px; font-weight:500;
+    padding-block:var(--s-xs);
+    border-bottom:2px solid transparent;
+  }
+  .site-nav a:hover{ border-bottom-color:var(--primary); }
+  .site-nav a[aria-current="true"]{ border-bottom-color:var(--primary); color:var(--primary); }
+
+  @media (max-width:840px){
+    .site-nav ul{ gap:var(--s-sm); }
+    .site-nav a{ font-size:14px; }
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{ text-align:left; }
+  .hero__kicker{ text-align:right; max-width:240px; margin-left:auto; color:#F1C0C0; }
+  .hero h1{
+    font-family:"PerecScripte2",cursive;
+    font-size:40px; line-height:48px; font-weight:400;
+    margin-bottom:var(--s-md);
+  }
+  .hero p{ max-width:56ch; margin-bottom:var(--s-lg); }
+  .hero__roles{
+    display:flex; flex-wrap:wrap; gap:var(--s-sm); list-style:none;
+  }
+  .hero__roles span{
+    display:inline-flex; align-items:center; gap:var(--s-xs);
+    font-size:16px; line-height:24px; font-weight:500;
+    padding:var(--s-xs) var(--s-md);
+    background:rgba(247,244,213,0.15);
+    border:1px solid rgba(247,244,213,0.5);
+    border-radius:var(--r-full);
+  }
+
+  /* ============================================================
+     COLORES
+     ============================================================ */
+  .swatch-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:var(--gutter);
+  }
+  @media (max-width:1024px){ .swatch-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:720px){ .swatch-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:420px){ .swatch-grid{ grid-template-columns:1fr; } }
+
+  .swatch{
+    background:none; border:none; text-align:left; cursor:pointer;
+    font-family:inherit; color:inherit; padding:0;
+  }
+  .swatch__chip{
+    height:120px; border:1px solid rgba(69,26,20,0.2);
+    position:relative; overflow:hidden;
+  }
+  .swatch__chip--overlay{
+    background:
+      var(--overlay),
+      repeating-linear-gradient(45deg, var(--surface) 0 14px, #efe9c4 14px 28px);
+  }
+  .swatch__copy{
+    position:absolute; right:8px; bottom:8px;
+    font-size:13px; line-height:16px; font-weight:500;
+    color:rgba(247,244,213,0.9);
+    background:rgba(69,26,20,0.4);
+    padding:2px 8px; border-radius:var(--r-full);
+    display:inline-block;
+  }
+  .swatch:hover .swatch__copy, .swatch:focus-visible .swatch__copy{ background:var(--on-surface); color:var(--surface); }
+  .swatch__hex{ font-size:16px; line-height:24px; font-weight:700; margin-top:var(--s-sm); }
+  .swatch__role{ font-size:16px; line-height:24px; font-weight:400; color:var(--on-surface); }
+  .swatch__token{ font-size:13px; line-height:18px; color:var(--text-tertiary); font-family:Consolas,monospace; }
+
+  .contrast-note{
+    margin-top:var(--s-lg);
+    padding:var(--s-md);
+    background:rgba(136,36,53,0.08);
+    border-left:6px solid var(--primary);
+    font-size:16px; line-height:24px;
+  }
+
+  /* ============================================================
+     TIPOGRAFÍA
+     ============================================================ */
+  .type-families{
+    display:grid; gap:var(--gutter);
+    grid-template-columns:repeat(2,1fr);
+    margin-bottom:var(--s-xl);
+  }
+  @media (max-width:720px){ .type-families{ grid-template-columns:1fr; } }
+
+  .family{
+    border:1px solid rgba(69,26,20,0.25);
+    padding:var(--s-lg);
+    background:#fffdf0;
+  }
+  .family__aa{ font-size:96px; line-height:1.1; margin-bottom:var(--s-sm); }
+  .family__aa--script{ font-family:"PerecScripte2",cursive; }
+  .family__name{ font-size:16px; line-height:24px; font-weight:700; }
+  .family__weights{ font-size:13px; line-height:18px; color:var(--text-tertiary); }
+
+  .scale{ list-style:none; border-top:1px solid rgba(69,26,20,0.25); }
+  .scale li{
+    display:grid; grid-template-columns:1fr auto;
+    align-items:center; gap:var(--s-md);
+    padding-block:var(--s-md);
+    border-bottom:1px solid rgba(69,26,20,0.2);
+  }
+  .scale li .sample{ overflow-wrap:anywhere; min-width:0; }
+  .scale li .meta{
+    text-align:right; font-size:14px; line-height:20px;
+    color:var(--on-surface); white-space:nowrap;
+    font-family:"Neue Haas Grotesk Display Pro",sans-serif;
+  }
+  .scale li .meta .familia{ color:var(--text-tertiary); font-family:Consolas,monospace; font-size:12px; }
+  @media (max-width:720px){
+    .scale li{ grid-template-columns:1fr; gap:var(--s-xs); }
+    .scale li .meta{ text-align:left; }
+  }
+
+  /* ============================================================
+     ESPACIADO
+     ============================================================ */
+  .spacing-scale{ list-style:none; display:grid; gap:var(--sm); }
+  .spacing-scale li{
+    display:grid; grid-template-columns:110px 1fr auto;
+    align-items:center; gap:var(--s-sm); font-size:16px; line-height:24px;
+  }
+  .spacing-scale .bar{
+    background:var(--primary); height:24px; width:var(--w,8px);
+    min-width:2px;
+  }
+  .spacing-scale .bar--dark{ background:var(--on-surface); height:24px; }
+  .spacing-scale .tag{ font-family:Consolas,monospace; font-size:14px; color:var(--text-tertiary); }
+  @media (max-width:640px){
+    .spacing-scale li{ grid-template-columns:90px 1fr; }
+    .spacing-scale .tag{ grid-column:2; }
+  }
+
+  .measure-bar{ margin-top:var(--s-lg); }
+  .measure-bar .bar{ height:32px; background:var(--on-surface); position:relative; }
+  .measure-bar .bar::after{ content:"1280px — content max"; position:absolute; right:8px; top:0; font-size:14px; line-height:32px; color:var(--surface); }
+  .measure-bar .gutters{ outline:2px dashed var(--secondary); outline-offset:-2px; }
+
+  /* ============================================================
+     FORMAS
+     ============================================================ */
+  .shapes-grid{
+    display:grid; gap:var(--gutter);
+    grid-template-columns:repeat(3,1fr);
+  }
+  @media (max-width:900px){ .shapes-grid{ grid-template-columns:1fr; } }
+
+  .shape-card{
+    border:1px solid rgba(69,26,20,0.25);
+    padding:var(--s-lg); background:#fffdf0;
+    display:grid; gap:var(--s-md); align-content:start;
+  }
+  .shape-card__demo{ display:flex; align-items:center; gap:var(--s-md); min-height:120px; }
+  .shape-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--primary); color:var(--surface);
+    font-family:"PerecScripte2",cursive; font-size:19.216px;
+    padding:var(--s-md); min-height:48px;
+  }
+  .shape-avatar{
+    width:80px; height:80px; border-radius:var(--r-full);
+    background:var(--secondary); color:var(--surface);
+    display:grid; place-items:center; overflow:hidden;
+    font-family:"PerecScripte2",cursive; font-size:28px;
+  }
+  .shape-eastwood{
+    width:120px; height:120px;
+    clip-path:polygon(20% 4%, 70% 12%, 96% 28%, 90% 58%, 100% 92%, 48% 100%, 14% 88%, 0 48%, 6% 20%);
+    overflow:hidden;
+  }
+  .shape-eastwood img{ width:100%; height:100%; object-fit:cover; }
+  .shape-card__rule{ border-top:1px dashed var(--secondary); padding-top:var(--s-md); }
+  .shape-card__rule .t-small{ color:var(--on-surface); }
+
+  /* ============================================================
+     ELEVACIÓN Y PROFUNDIDAD (plano + duotono + overlay)
+     ============================================================ */
+  .elevation-grid{
+    display:grid; gap:var(--gutter);
+    grid-template-columns:1fr 1fr;
+    align-items:start;
+  }
+  @media (max-width:860px){ .elevation-grid{ grid-template-columns:1fr; } }
+
+  .elev-demo{
+    background:#fffdf0; border:1px solid rgba(69,26,20,0.25);
+    padding:var(--s-lg);
+  }
+  .elev-demo h3{ margin-bottom:var(--s-md); }
+
+  .layer-stack{ position:relative; padding-top:56px; }
+  .layer-stack .card{
+    background:var(--on-surface); color:var(--surface);
+    padding:var(--s-md); min-height:120px;
+    position:relative; z-index:2;
+  }
+  .layer-stack::before{
+    content:""; position:absolute; inset-inline:-16px; top:-16px; bottom:-16px;
+    background:var(--primary); z-index:1;
+  }
+
+  .float-anchor{
+    background:var(--surface); color:var(--on-surface);
+    padding:var(--s-md); border:1px solid rgba(69,26,20,0.25);
+    box-shadow:var(--shadow-anchor);
+    transform:rotate(-1.5deg);
+    max-width:260px;
+  }
+
+  .duotone{
+    position:relative; overflow:hidden;
+    background:linear-gradient(135deg, var(--primary) 0%, var(--on-surface) 100%);
+    aspect-ratio:16/10;
+  }
+  .duotone img{
+    width:100%; height:100%; object-fit:cover;
+    filter:grayscale(1) contrast(1.15);
+    mix-blend-mode:multiply;
+  }
+  .duotone--portrait{ aspect-ratio:4/5; }
+
+  /* ============================================================
+     COMPONENTES
+     ============================================================ */
+  .component-block{
+    border:1px solid rgba(69,26,20,0.25);
+    background:#fffdf0;
+    padding:var(--s-xl);
+  }
+  .component-block + .component-block{ margin-top:var(--s-xl); }
+  .component-block > h3{ margin-bottom:var(--s-md); }
+  .component-block .desc{ font-size:16px; line-height:24px; color:var(--on-surface); margin-bottom:var(--s-lg); }
+
+  .btn-row{ display:flex; flex-wrap:wrap; gap:var(--s-md); align-items:center; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:var(--s-xs);
+    border:none; cursor:pointer;
+    font-family:"PerecScripte2",cursive; font-size:19.216px; line-height:24px;
+    padding:var(--s-md); min-height:48px;
+    border-radius:var(--r-none);                    /* rounded.none */
+    text-decoration:none;
+  }
+  .btn--primary{ background:var(--primary); color:var(--surface); }
+  .btn--primary:hover, .btn--primary:focus-visible{
+    background:var(--surface); color:var(--primary); /* hover: invierte contraste */
+    outline-color:var(--primary);
+  }
+  .btn--primary.is-hover{ background:var(--surface); color:var(--primary); }
+  .btn--secondary{ background:var(--button-secondary); color:var(--on-surface); }
+  .btn--secondary:hover, .btn--secondary:focus-visible{ text-decoration:underline; background:#96b3a2; }
+
+  .icon-btn{
+    width:48px; height:48px; border-radius:var(--r-full);
+    background:var(--primary); color:var(--surface);
+    display:inline-grid; place-items:center;
+    border:none; cursor:pointer;
+    font-size:20px; line-height:1;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible{ background:var(--secondary); }
+
+  .chip-row, .chip-list{ display:flex; flex-wrap:wrap; gap:var(--s-sm); align-items:center; }
+  .chip{
+    background:var(--button-secondary); color:var(--on-surface);
+    border-radius:var(--r-full);                       /* rounded.full */
+    font-size:16px; line-height:24px; font-weight:500;
+    padding:var(--s-xs) var(--s-md);
+  }
+  .chip-list{ list-style:none; }
+
+  .link-demo{
+    color:var(--link); font-size:20px; line-height:30px;
+    text-decoration:none; font-weight:400;
+  }
+  .link-demo:hover, .link-demo:focus-visible{ text-decoration:underline; text-underline-offset:4px; }
+
+  .cards-grid{
+    display:grid; gap:var(--gutter);
+    grid-template-columns:repeat(2,1fr);
+  }
+  @media (max-width:820px){ .cards-grid{ grid-template-columns:1fr; } }
+
+  .card{
+    padding:var(--s-lg);                /* múltiplo de 8px */
+    border-radius:var(--r-none);
+    display:grid; gap:var(--s-sm); align-content:start;
+  }
+  .card--cream{ background:var(--surface); color:var(--on-surface); border:1px solid rgba(69,26,20,0.2); }
+  .card--cafe{ background:var(--on-surface); color:var(--surface); }
+  .card--cafe .t-h3{ color:#F1C0C0; }
+  .card__title{ font-size:24px; line-height:30px; font-weight:700; }
+  .card__body{ font-size:16px; line-height:24px; }
+  .card__cta{ color:var(--link); text-decoration:none; font-weight:500; align-self:start; }
+  .card__cta:hover, .card__cta:focus-visible{ text-decoration:underline; }
+
+  .card--bleed{ position:relative; overflow:hidden; padding:0; }
+  .card--bleed .inner{ padding:var(--s-lg); display:grid; gap:var(--s-sm); }
+  .card--bleed .duotone{ margin-inline:-16px; margin-top:0; }  /* la foto sangra un borde */
+  .card--bleed--left .duotone{ margin-inline:0 -16px -16px 0; }
+  .card--bleed--right .duotone{ margin-inline:-16px 0 0 -16px; }
+
+  /* Tipografía como componente */
+  .headline-demo{
+    background:var(--primary); color:var(--surface);
+    padding:var(--s-xxl) var(--s-lg);
+    text-align:center;
+  }
+  .headline-demo .t-display{ display:block; margin-bottom:var(--s-sm); }
+  .headline-demo p{ font-size:16px; line-height:24px; color:rgba(247,244,213,0.85); }
+
+  /* Intervención fotográfica (componente distintivo) */
+  .intervention{
+    position:relative;
+    background:var(--on-surface); color:var(--surface);
+    padding:var(--s-xxl) var(--gutter);
+    overflow:hidden;
+  }
+  .intervention__inner{ max-width:var(--content-max); margin-inline:auto; }
+  .intervention__photo{
+    width:min(560px,100%);
+    margin-inline-start:auto;
+    transform:translateX(20px);          /* rompe parcialmente la rejilla */
+  }
+  @media (max-width:860px){
+    .intervention__photo{ transform:none; margin-inline-start:0; }
+  }
+  .intervention__accent{
+    position:absolute; left:16px; bottom:16px;
+    width:64px; height:64px;
+    clip-path:polygon(50% 0, 92% 32%, 72% 100%, 26% 86%, 0 42%);
+    background:var(--primary);
+    transform:rotate(-8deg);
+  }
+  .intervention__label{
+    display:inline-flex; align-items:center; gap:var(--xs);
+    margin-bottom:var(--s-md);
+    font-size:16px; line-height:24px; font-weight:500;
+    padding:var(--s-xs) var(--s-md);
+    border:1px solid rgba(247,244,213,0.5); border-radius:var(--r-full);
+  }
+  .intervention__step{ font-family:"PerecScripte2",cursive; font-size:28px; line-height:36px; margin-bottom:var(--s-sm); }
+
+  /* ============================================================
+     DO'S AND DON'TS
+     ============================================================ */
+  .rules-grid{ display:grid; gap:var(--gutter); grid-template-columns:1fr 1fr; align-items:start; }
+  @media (max-width:860px){ .rules-grid{ grid-template-columns:1fr; } }
+  .rules h3{ margin-bottom:var(--s-md); }
+  .rules ul{ list-style:none; display:grid; gap:var(--s-sm); }
+  .rules li{ font-size:16px; line-height:24px; padding-left:28px; position:relative; }
+  .rules li::before{ position:absolute; left:0; top:0; font-weight:700; }
+  .rules--yes li::before{ content:"✓"; color:var(--primary); }
+  .rules--no li::before{ content:"✗"; color:var(--secondary); }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .site-footer{ background:var(--on-surface); color:var(--surface); padding-block:var(--s-xxl); }
+  .site-footer .container{ display:grid; gap:var(--s-sm); }
+  .site-footer .t-small{ color:rgba(247,244,213,0.7); }
+  .site-footer a{ color:#ffffff; }
+  .foot-mark{ font-family:"PerecScripte2",cursive; font-size:28px; line-height:36px; }
+
+  /* ============================================================
+     INTERACCIONES / JS
+     ============================================================ */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  #copy-toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    background:var(--on-surface); color:var(--surface);
+    font-size:16px; line-height:24px; padding:var(--s-sm) var(--s-md);
+    border-radius:var(--r-full);
+    opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:80;
+  }
+  #copy-toast.show{ opacity:1; }
+</style>
+</head>
+<body>
+
+<a class="sr-only" href="#paleta">Saltar al contenido</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="Ir al inicio">
+      <span class="brand__mark" aria-hidden="true">K</span>
+      <span class="brand__name">Karina Gutiérrez Rangel</span>
+    </a>
+    <nav class="site-nav" aria-label="Secciones del sistema">
+      <ul>
+        <li><a href="#paleta">Paleta</a></li>
+        <li><a href="#tipografia">Tipografía</a></li>
+        <li><a href="#espaciado">Espaciado</a></li>
+        <li><a href="#formas">Formas</a></li>
+        <li><a href="#profundidad">Profundidad</a></li>
+        <li><a href="#componentes">Componentes</a></li>
+        <li><a href="#sino">Sí y No</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================== HERO ================== -->
+  <section class="block block--primary">
+    <div class="container hero">
+      <p class="hero__kicker t-small">Estética de collage · fotografía intervenida · orden y espacio</p>
+      <h1 class="t-display">Mi Sistema de Diseño</h1>
+      <p class="t-body">Una rejilla estructural que permite rupturas fotográficas intencionales: el puente entre la exploración del collage y la funcionalidad legible. El orden nunca se pierde, tampoco se vuelve rígido.</p>
+      <ul class="hero__roles" aria-label="Narrativa del sistema">
+        <li>observar</li>
+        <li>intervenir</li>
+        <li>resolver</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================== COLORS ================== -->
+  <section id="paleta" class="block block--surface">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">1 ·</span>
+        <h2 class="t-h1">Paleta de color y su rol</h2>
+        <p class="t-body">Dos magentas de marca y una base cálida de alto contraste. Regla rectora: colores que contrastan entre sí pero se mantienen sutiles.</p>
+      </div>
+
+      <ul class="swatch-grid" id="swatches"></ul>
+
+      <p class="contrast-note">
+        <strong>REVISAR:</strong> <code>link</code> #0088CC sobre la superficie cálida tiene contraste ≈ 3.5:1 (bajo AA 4.5:1 para texto normal). Aceptable para interactivos, no para cuerpo. El overlay <code>rgba(136,36,53,0.45)</code> es un valor propuesto en tono de marca.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================== TYPOGRAPHY ================== -->
+  <section id="tipografia" class="block block--surface">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">2 ·</span>
+        <h2 class="t-h1">Escala tipográfica</h2>
+        <p class="t-body">Dos familias con roles claros: <strong>Neue Haas Grotesk Display Pro</strong> para cuerpo, navegación y contenido; <strong>PerecScripte2</strong> para títulos, botones y énfasis. La jerarquía se logra con tamaño, peso y color, nunca con opacidad.</p>
+      </div>
+
+      <div class="type-families reveal">
+        <div class="family">
+          <div class="family__aa" aria-hidden="true">Aa</div>
+          <h3 class="family__name">Neue Haas Grotesk Display Pro</h3>
+          <p class="family__weights">Principal · pesos Roman 400 · Medium 500 · Bold 700</p>
+        </div>
+        <div class="family">
+          <div class="family__aa family__aa--script" aria-hidden="true">Aa</div>
+          <h3 class="family__name">PerecScripte2</h3>
+          <p class="family__weights">Secundaria · títulos, botones y énfasis · peso 400</p>
+        </div>
+      </div>
+
+      <ol class="scale reveal" id="type-scale"></ol>
+
+      <p class="contrast-note" style="margin-top:var(--s-lg);">
+        El cuerpo nunca baja de 16px; la versión roman de la familia principal se reserva para los titulares más importantes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================== SPACING ================== -->
+  <section id="espaciado" class="block block--surface">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">3 ·</span>
+        <h2 class="t-h1">Espaciado y retícula</h2>
+        <p class="t-body">Unidad base de 8px para el espaciado interno de componentes; el espacio interno de las tarjetas se calcula en múltiplos de la base.</p>
+      </div>
+
+      <ul class="spacing-scale reveal" id="spacing-scale"></ul>
+
+      <div class="measure-bar reveal" aria-label="Ancho máximo de contenido 1280px">
+        <div class="bar"><span class="sr-only">Contenedor de 1280px con gutters de 24px</span></div>
+      </div>
+      <p class="t-small" style="margin-top:var(--s-xs); color:var(--text-tertiary);">
+        Rejilla intervenida: 12 columnas en escritorio, 8 en tableta, 1 en móvil. Las imágenes de intervención pueden sangrar (bleed parcial) en un solo punto por sección.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================== SHAPES ================== -->
+  <section id="formas" class="block block--surface">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">4 ·</span>
+        <h2 class="t-h1">Radios y formas</h2>
+        <p class="t-body"><strong>Lo estructural es recto; lo interventor es orgánico.</strong> Nunca se mezclan en el mismo elemento.</p>
+      </div>
+
+      <div class="shapes-grid reveal">
+        <article class="shape-card">
+          <h3 class="t-h3">Esquinas rectas · 0px</h3>
+          <div class="shape-card__demo">
+            <span class="shape-btn">Default</span>
+            <div class="t-small" style="color:var(--text-tertiary);">rounded.none</div>
+          </div>
+          <p class="shape-card__rule t-small">Por defecto en todo el sistema: botones, tarjetas, inputs.</p>
+        </article>
+
+        <article class="shape-card">
+          <h3 class="t-h3">Círculos perfectos · 50%</h3>
+          <div class="shape-card__demo">
+            <span class="shape-avatar" aria-hidden="true">K</span>
+            <div class="t-small" style="color:var(--text-tertiary);">rounded.full<br>avatar · marco de imagen · acento</div>
+          </div>
+          <p class="shape-card__rule t-small">Reservado a la intervención humana o fotográfica.</p>
+        </article>
+
+        <article class="shape-card">
+          <h3 class="t-h3">Recorte orgánico</h3>
+          <div class="shape-card__demo">
+            <div class="shape-eastwood"><img src="assets/img/IMG_FOTO.jpg" alt="Fotografía recortada en forma orgánica tipo collage"></div>
+            <div class="t-small" style="color:var(--text-tertiary);">solo fotografías<br>nunca interfaz funcional</div>
+          </div>
+          <p class="shape-card__rule t-small">Formas irregulares tipo collage, exclusivas del tratamiento fotográfico.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== ELEVATION & DEPTH ================== -->
+  <section id="profundidad" class="block block--primary">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">5 ·</span>
+        <h2 class="t-h1">Elevación y profundidad</h2>
+        <p class="t-body">Sin volumen simulado: sin sombras difusas, degradados ni neumorfismo. La profundidad es contraste duro entre capas de fotografía intervenida y bloques de color plano.</p>
+      </div>
+
+      <div class="elevation-grid">
+        <article class="elev-demo reveal">
+          <h3 class="t-h3">Superposición plana</h3>
+          <div class="layer-stack">
+            <div class="card">
+              <p class="t-h3">Capa sobre capa</p>
+              <p class="t-small">Tipografía y gráficos directos sobre bloques de color; contraste duro, no sombra.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="elev-demo reveal">
+          <h3 class="t-h3">Ancla física (sombras mínimas)</h3>
+          <div class="float-anchor">
+            <p class="t-h3">Producto flotante</p>
+            <p class="t-small">Sombra mínima solo de anclaje, nunca decorativa. <strong style="color:var(--text-tertiary);">REVISAR</strong></p>
+          </div>
+          <p class="t-small" style="margin-top:var(--s-md); color:var(--text-tertiary);">box-shadow: 0 4px 12px rgba(0,0,0,.15)</p>
+        </article>
+      </div>
+
+      <div class="elevation-grid" style="margin-top:var(--s-xl);">
+        <article class="elev-demo reveal">
+          <h3 class="t-h3">Overlay de marca</h3>
+          <div class="duotone duotone--portrait" style="aspect-ratio:16/9;">
+            <img src="assets/img/IMG_FOTO.jpg" alt="Fotografía con overlay semitransparente en tono de marca">
+          </div>
+          <p class="t-small" style="margin-top:var(--s-md); color:rgba(247,244,213,0.85);">Overlays en tonos de marca (magenta/café); nunca negro o gris neutro difuso.</p>
+        </article>
+
+        <article class="elev-demo reveal">
+          <h3 class="t-h3">Duotono fotográfico</h3>
+          <div class="duotone">
+            <img src="assets/img/IMG_FOTO.jpg" alt="Fotografía tratada en duotono magenta y café">
+          </div>
+          <p class="t-small" style="margin-top:var(--s-md); color:rgba(247,244,213,0.85);">Toda fotografía se recorta o trata en duotono con la paleta de marca antes de insertarse.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== COMPONENTS ================== -->
+  <section id="componentes" class="block block--surface">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">6 ·</span>
+        <h2 class="t-h1">Componentes</h2>
+        <p class="t-body">Botones, enlaces, tarjetas, tipografía-como-componente e intervención fotográfica.</p>
+      </div>
+
+      <!-- Botones -->
+      <article class="component-block reveal">
+        <h3 class="t-h3">Botones</h3>
+        <p class="desc">Esquinas rectas (0px), fondo primary {colors.primary} y texto en el blanco de marca o café según el fondo. El hover invierte el contraste.</p>
+        <div class="btn-row">
+          <button type="button" class="btn btn--primary">Acción principal</button>
+          <button type="button" class="btn btn--primary is-hover" aria-label="Botón principal en estado hover (contraste invertido)">Hover</button>
+          <button type="button" class="btn btn--secondary">Secundario</button>
+          <button type="button" class="btn btn--primary" disabled style="opacity:.45; cursor:not-allowed;">Deshabilitado</button>
+        </div>
+      </article>
+
+      <!-- Enlaces -->
+      <article class="component-block reveal">
+        <h3 class="t-h3">Enlaces e interactivos secundarios</h3>
+        <p class="desc">En azul cielo ({colors.link}), subrayado solo en hover, nunca en reposo.</p>
+        <div class="btn-row">
+          <a class="link-demo" href="#top">Enlace en reposo</a>
+          <a class="link-demo" href="#top" style="text-decoration:underline; text-underline-offset:4px;">Enlace en hover</a>
+          <button type="button" class="icon-btn" aria-label="Botón de ícono circular">→</button>
+          <button type="button" class="icon-btn" aria-label="Botón de ícono circular con marca">✦</button>
+        </div>
+      </article>
+
+      <!-- Chips -->
+      <article class="component-block reveal">
+        <h3 class="t-h3">Chips / pills</h3>
+        <p class="desc">Redondeo completo como contrapunto orgánico.</p>
+        <ul class="chip-list">
+          <li class="chip">observar</li>
+          <li class="chip">intervenir</li>
+          <li class="chip">resolver</li>
+          <li class="chip">collage</li>
+        </ul>
+      </article>
+
+      <!-- Tarjetas -->
+      <article class="component-block reveal">
+        <h3 class="t-h3">Bloques y tarjetas</h3>
+        <p class="desc">Fondo plano (crema o café), espacio interno en múltiplos de 8px. Si incluye imagen, la fotografía puede sangrar un borde como intervención controlada.</p>
+        <div class="cards-grid">
+          <article class="card card--cream">
+            <h4 class="card__title">Tarjeta plana</h4>
+            <p class="card__body">Bloque de color sólido con texto superpuesto directo, sin respiro blanco intermedio.</p>
+            <a class="card__cta" href="#top">Conocer más →</a>
+          </article>
+          <article class="card card--cafe">
+            <h4 class="card__title">Tarjeta café</h4>
+            <p class="card__body">La variante de mayor contraste: café profundo con texto en el blanco de marca.</p>
+            <a class="card__cta" href="#top" style="color:#ffffff;">Conocer más →</a>
+          </article>
+          <article class="card card--cream card--bleed card--bleed--left" style="grid-column:1 / -1;">
+            <div class="duotone" style="aspect-ratio:16/7;">
+              <img src="assets/img/IMG_FOTO.jpg" alt="Tarjeta con fotografía en duotono que sangra el borde derecho">
+            </div>
+            <div class="inner">
+              <h4 class="card__title">Tarjeta con sangrado</h4>
+              <p class="card__body">La fotografía duotona sangra el borde como gesto de intervención controlada; el interior mantiene el ritmo de la base de 8px.</p>
+            </div>
+          </article>
+        </div>
+      </article>
+
+      <!-- Tipografía como componente -->
+      <article class="component-block reveal">
+        <h3 class="t-h3">Tipografía como componente</h3>
+        <p class="desc">El título display puede ocupar el ancho completo del bloque como elemento gráfico principal, sustituyendo a la ilustración.</p>
+        <div class="headline-demo">
+          <span class="t-display">observar · intervenir · resolver</span>
+          <p>Headline full-width sobre bloque de color de marca.</p>
+        </div>
+      </article>
+
+      <!-- Intervención fotográfica -->
+      <article class="component-block reveal" style="padding:0; overflow:hidden;">
+        <div class="intervention">
+          <div class="intervention__inner">
+            <p class="intervention__label">componente distintivo · un momento por sección</p>
+            <p class="intervention__step">intervención fotográfica</p>
+            <div class="intervention__photo duotone">
+              <img src="assets/img/IMG_FOTO.jpg" alt="Intervención fotográfica en duotono que rompe parcialmente la rejilla">
+            </div>
+          </div>
+          <span class="intervention__accent" aria-hidden="true"></span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================== DO'S AND DON'TS ================== -->
+  <section id="sino" class="block block--cafe">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">7 ·</span>
+        <h2 class="t-h1">Sí y No</h2>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rules rules--yes reveal">
+          <h3 class="t-h3">Sí</h3>
+          <ul>
+            <li>Usa la rejilla como base siempre; toda ruptura debe ser intencional y legible como parte de la narrativa (observar → intervenir → resolver).</li>
+            <li>Trata toda fotografía con duotono de marca antes de insertarla; nunca fotografías sin intervenir.</li>
+            <li>Reserva las formas orgánicas exclusivamente para el tratamiento fotográfico.</li>
+            <li>Aplica alto contraste tipográfico siempre.</li>
+            <li>Deja que el espacio en blanco funcione como pausa narrativa, no como relleno.</li>
+          </ul>
+        </div>
+        <div class="rules rules--no reveal">
+          <h3 class="t-h3">No</h3>
+          <ul>
+            <li>No uses sombras difusas, degradados ni neumorfismo.</li>
+            <li>No apliques recortes orgánicos a componentes funcionales de interfaz.</li>
+            <li>No insertes fotografía de stock sin intervención de color/tratamiento.</li>
+            <li>No rompas la rejilla en más de un punto por sección.</li>
+            <li>No uses grises medios para texto de cuerpo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="foot-mark">Sistema de diseño</p>
+    <p class="t-small">Referencia visual generada desde DESIGN.md · Karina Gutiérrez Rangel · estética de collage con intervención fotográfica.</p>
+    <p class="t-small">Valores marcados como <em>REVISAR</em> están propuestos y a la espera de confirmación.</p>
+  </div>
+</footer>
+
+<div id="copy-toast" role="status" aria-live="polite">Copiado</div>
+
+<script>
+/* ==========================================================
+   DATOS — tokens desde DESIGN.md
+   ========================================================== */
+const SWATCHES = [
+  { token: "colors.primary",        hex: "#882435", role: "Principal · CTA, acentos, títulos e identidad", light: false },
+  { token: "colors.secondary",      hex: "#AE5362", role: "Énfasis puntual", light: false },
+  { token: "colors.link",           hex: "#0088CC", role: "Enlaces e interactivos secundarios", light: false },
+  { token: "colors.button-secondary", hex: "#AAC5B4", role: "Fondo de botones secundarios y fantasma", light: true },
+  { token: "colors.on-surface",     hex: "#451A14", role: "Texto principal y mayor contraste", light: false },
+  { token: "colors.surface",        hex: "#F7F4D5", role: "Blanco de marca · fondo principal", light: true },
+  { token: "colors.text-tertiary",  hex: "#808080", role: "Texto terciario y deshabilitados", light: true },
+  { token: "colors.overlay",        hex: "rgba(136,36,53,0.45)", role: "Overlay semitransparente de marca · REVISAR", light: false, overlay: true }
+];
+
+const TYPE_SCALE = [
+  { name: "Display",        cls: "t-display", familia: "PerecScripte2", meta: "40px · 48px · w400" },
+  { name: "H1",             cls: "t-h1",      familia: "Neue Haas",     meta: "40px · 48px · w700" },
+  { name: "H2",             cls: "t-h2",      familia: "Neue Haas",     meta: "40px · 48px · w400" },
+  { name: "H3 · subsecciones", cls: "t-h3",   familia: "Neue Haas",     meta: "16px · 24px · w700" },
+  { name: "Body",           cls: "t-body",    familia: "Neue Haas",     meta: "20px · 30px · w400" },
+  { name: "Ítem de lista",  cls: "t-list",    familia: "Neue Haas",     meta: "20px · 30px · w500" },
+  { name: "Texto pequeño",  cls: "t-small",   familia: "Neue Haas",     meta: "16px · 24px · w400" },
+  { name: "Etiqueta de botón", cls: "t-label", familia: "PerecScripte2", meta: "19.216px · 24px · w400" },
+  { name: "Enlace",         cls: "t-link",    familia: "Neue Haas",     meta: "20px · 30px · w400" }
+];
+
+const SPACES = [
+  { token: "base",   label: "base  · 8px",  w: Math.max(8  / 8  * 18, 4), n: 1 },
+  { token: "xs",     label: "xs  · 4px",    w: Math.max(4  / 8  * 18, 4), n: 0.5, rev: true },
+  { token: "md",     label: "md  · 16px",   w: 16  / 8  * 18,              n: 2 },
+  { token: "lg",     label: "lg  · 24px",   w: 24  / 8  * 18,              n: 3 },
+  { token: "xl",     label: "xl  · 32px",   w: 32  / 8  * 18,              n: 4 },
+  { token: "xxl",    label: "xxl  · 64px",  w: 64  / 8  * 18,              n: 8 },
+  { token: "gutter", label: "gutter · 24px", w: 24 / 8 * 18,               n: 3, rev: true },
+  { token: "section",label: "section · 64px", w: 64 / 8 * 18,              n: 8, rev: true }
+];
+
+/* ==========================================================
+   RENDER: colores
+   ========================================================== */
+function renderSwatches(){
+  const ul = document.getElementById("swatches");
+  ul.setAttribute("aria-label", "Paleta de colores con su rol. Clic para copiar el valor hexadecimal.");
+  ul.innerHTML = SWATCHES.map(s => {
+    const style = s.overlay
+      ? ""
+      : `style="background:${s.hex}"`;
+    const chipBg = s.overlay
+      ? `style="background:${s.overlay}, repeating-linear-gradient(45deg,#F7F4D5 0 14px,#efe9c4 14px 28px)"`
+      : `style="background:${s.hex}"`;
+    return `
+      <li>
+        <button type="button" class="swatch" data-copy="${s.hex}" aria-label="Copiar ${s.hex}: ${s.role}">
+          <span class="swatch__chip" ${chipBg}></span>
+          <span class="swatch__hex">${s.hex}</span>
+          <span class="swatch__role">${s.role}</span>
+          <span class="swatch__token">${s.token}</span>
+          <span class="swatch__copy" aria-hidden="true">copiar</span>
+        </button>
+      </li>`;
+  }).join("");
+}
+
+/* ==========================================================
+   RENDER: tipografía
+   ========================================================== */
+function renderTypeScale(){
+  const ol = document.getElementById("type-scale");
+  ol.innerHTML = TYPE_SCALE.map(t => `
+    <li>
+      <span class="sample ${t.cls}">${t.name} — La estética del collage interviene la rejilla</span>
+      <span class="meta">
+        ${t.meta}<br>
+        <span class="familia">${t.familia}</span>
+      </span>
+    </li>`).join("");
+}
+
+/* ==========================================================
+   RENDER: espaciado
+   ========================================================== */
+function renderSpacing(){
+  const ul = document.getElementById("spacing-scale");
+  ul.setAttribute("aria-label", "Escala de espaciado en múltiplos de la base de 8px");
+  ul.innerHTML = SPACES.map(s => {
+    const bar = s.n === undefined
+      ? `<span class="bar" style="width:${s.w}px" aria-hidden="true"></span>`
+      : `<span class="bar ${s.n > 1 ? 'bar--dark' : ''}" style="width:${s.w}px" aria-hidden="true"></span>`;
+    return `
+      <li>
+        <span>${s.label}</span>
+        ${bar}
+        <span class="tag">spacing.${s.token}${s.rev ? " · REVISAR" : ""}</span>
+      </li>`;
+  }).join("");
+}
+
+/* ==========================================================
+   CLIPBOARD + TOAST
+   ========================================================== */
+function copyText(text){
+  return new Promise(resolve => {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(resolve, () => fallback(resolve));
+    } else {
+      fallback(resolve);
+    }
+    function fallback(done){
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand("copy"); } catch(e) {}
+      document.body.removeChild(ta); done();
+    }
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById("copy-toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove("show"), 1400);
+}
+
+document.addEventListener("click", e => {
+  const sw = e.target.closest(".swatch");
+  if (!sw) return;
+  const value = sw.dataset.copy;
+  copyText(value).then(() => showToast(`${value} copiado » `));
+});
+
+/* ==========================================================
+   REVEAL ON SCROLL (respeta reduced-motion vía CSS)
+   ========================================================== */
+(function(){
+  const els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)) {
+    els.forEach(el => el.classList.add("in"));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ==========================================================
+   SCROLLSPY — resaltar enlace activo
+   ========================================================== */
+(function(){
+  const links = document.querySelectorAll('.site-nav a');
+  const ids = [...links].map(a => a.getAttribute("href").slice(1));
+  const map = new Map(ids.map(id => [id, [...links].find(a => a.getAttribute("href") === "#" + id)]));
+  if (!("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      links.forEach(a => { a.removeAttribute("aria-current"); });
+      const link = map.get(en.target.id);
+      if (link) link.setAttribute("aria-current", "true");
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  ids.forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+})();
+
+/* ==========================================================
+   INIT
+   ========================================================== */
+renderSwatches();
+renderTypeScale();
+renderSpacing();
+</script>
+
+</body>
+</html>

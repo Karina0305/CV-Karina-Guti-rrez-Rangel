@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portafolio de Karina Gutiérrez Rangel — Diseñadora gráfica y digital, enfocada en UX-UI.">
+<title>Karina Gutiérrez Rangel — Koko</title>
+
+<style>
+/* ============================================================
+   @FONT-FACE — Fuentes locales
+   ============================================================ */
+@font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Book.woff2") format("woff2"); font-weight:400; font-display:swap; }
+@font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+@font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Medium.woff2") format("woff2"); font-weight:500; font-display:swap; }
+@font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Medium.woff2") format("woff2"); font-weight:600; font-display:swap; }
+@font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Bold.woff2") format("woff2"); font-weight:700; font-display:swap; }
+@font-face{ font-family:"Neue Haas Grotesk Display Pro"; src:url("assets/fonts/NeueHaasDisplayRoman.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Neue Haas Grotesk Display Pro"; src:url("assets/fonts/NeueHaasDisplayMediu.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Neue Haas Grotesk Display Pro"; src:url("assets/fonts/NeueHaasDisplayBold.woff") format("woff"); font-weight:700; font-style:normal; font-display:swap; }
+
+/* ============================================================
+   TOKENS — DESIGN_v4.md
+   ============================================================ */
+:root{
+  --primary:     #ED809D;
+  --secondary:   #C9C769;
+  --on-surface:  #461312;
+  --surface:     #EAE1CB;
+
+  --pop-border: 3px solid #461312;
+  --pop-border-thin: 2px solid #461312;
+  --pop-shadow: 6px 6px 0 #461312;
+  --pop-shadow-sm: 4px 4px 0 #461312;
+  --pop-shadow-primary: 6px 6px 0 var(--primary);
+  --pop-shadow-secondary: 6px 6px 0 var(--secondary);
+
+  --ease: cubic-bezier(.19,1,.22,1);
+  --gutter: 24px;
+  --section: 80px;
+  --content-max: 1280px;
+  --r-card: 0px;
+  --r-pill: 50%;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; scroll-padding-top:80px; }
+body{
+  font-family:"Neue Haas Grotesk Display Pro","Filson Soft","Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.7; font-weight:400;
+  color:var(--on-surface); background:var(--surface);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{ display:block; max-width:100%; }
+a{ color:var(--on-surface); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+:focus-visible{ outline:3px solid var(--secondary); outline-offset:3px; }
+::selection{ background:var(--primary); color:var(--on-surface); }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.container{ width:100%; max-width:var(--content-max); margin:0 auto; padding:0 var(--gutter); position:relative; z-index:1; }
+
+/* ============================================================
+   TEXTURAS ANIMADAS DE FONDO
+   ============================================================ */
+.texture{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  opacity:.3;
+}
+.texture--dots{
+  background-image:radial-gradient(circle, var(--on-surface) 3px, transparent 4px);
+  background-size:48px 48px;
+  animation:texDriftDots 18s linear infinite;
+}
+@keyframes texDriftDots{ from{ background-position:0 0 } to{ background-position:48px 48px } }
+.texture--lines{
+  background-image:repeating-linear-gradient(0deg, var(--on-surface) 0px, var(--on-surface) 2.5px, transparent 2.5px, transparent 28px);
+  background-size:100% 28px;
+  animation:texDriftLines 6s linear infinite;
+}
+@keyframes texDriftLines{ from{ background-position:0 0 } to{ background-position:0 112px } }
+.texture--diags{
+  background-image:repeating-linear-gradient(45deg, var(--on-surface) 0px, var(--on-surface) 2.5px, transparent 2.5px, transparent 28px);
+  background-size:36px 36px;
+  animation:texDriftDiags 5s linear infinite;
+}
+@keyframes texDriftDiags{ from{ background-position:0 0 } to{ background-position:36px 36px } }
+.texture--cross{
+  background-image:
+    repeating-linear-gradient(0deg, var(--on-surface) 0px, var(--on-surface) 2.5px, transparent 2.5px, transparent 32px),
+    repeating-linear-gradient(90deg, var(--on-surface) 0px, var(--on-surface) 2.5px, transparent 2.5px, transparent 32px);
+  background-size:32px 32px;
+  animation:texDriftCross 8s linear infinite;
+}
+@keyframes texDriftCross{ from{ background-position:0 0 } to{ background-position:32px 32px } }
+.texture--waves{
+  background-image:
+    radial-gradient(ellipse 60px 8px at 50% 8px, var(--on-surface) 7px, transparent 8px),
+    radial-gradient(ellipse 60px 8px at 50% 22px, var(--on-surface) 7px, transparent 8px);
+  background-size:120px 30px;
+  animation:texDriftWaves 10s linear infinite;
+}
+@keyframes texDriftWaves{ from{ background-position:0 0 } to{ background-position:120px 0 } }
+.section .texture{ opacity:.18; }
+.section--dark .texture{ opacity:.1; background-color:transparent; }
+.section--dark .texture--dots{ background-image:radial-gradient(circle, rgba(255,255,255,.7) 3px, transparent 4px); }
+.section--dark .texture--lines{ background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0px, rgba(255,255,255,.5) 2.5px, transparent 2.5px, transparent 28px); }
+.section--dark .texture--diags{ background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.5) 0px, rgba(255,255,255,.5) 2.5px, transparent 2.5px, transparent 28px); }
+.section--dark .texture--cross{ background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.4) 0px, rgba(255,255,255,.4) 2.5px, transparent 2.5px, transparent 32px), repeating-linear-gradient(90deg, rgba(255,255,255,.4) 0px, rgba(255,255,255,.4) 2.5px, transparent 2.5px, transparent 32px); }
+.section--dark .texture--waves{ background-image:radial-gradient(ellipse 60px 8px at 50% 8px, rgba(255,255,255,.6) 7px, transparent 8px), radial-gradient(ellipse 60px 8px at 50% 22px, rgba(255,255,255,.6) 7px, transparent 8px); }
+
+/* ============================================================
+   GRAIN OVERLAY
+   ============================================================ */
+body::after{
+  content:""; position:fixed; inset:0; z-index:999; pointer-events:none;
+  opacity:.04; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px 128px;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.site-nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px var(--gutter);
+  background:var(--surface); border-bottom:var(--pop-border-thin);
+}
+.nav-logo{
+  display:flex; align-items:center; gap:12px;
+  text-decoration:none; color:var(--on-surface);
+}
+.nav-logo__badge{
+  width:48px; height:48px; border-radius:50%;
+  background:var(--primary); color:var(--on-surface);
+  border:var(--pop-border); box-shadow:var(--pop-shadow-sm);
+  display:grid; place-items:center;
+  font-family:"Filson Soft",sans-serif; font-weight:800; font-size:14px;
+}
+.nav-logo__name{ font-weight:700; font-size:18px; letter-spacing:.02em; }
+.nav-links{ display:flex; gap:24px; list-style:none; }
+.nav-links a{
+  font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--on-surface); text-decoration:none;
+  padding-bottom:4px; border-bottom:2px solid transparent;
+  transition:border-color .2s ease;
+}
+.nav-links a:hover{ border-bottom-color:var(--secondary); text-decoration:none; }
+
+.nav-cta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--secondary); color:var(--on-surface);
+  font-weight:700; font-size:14px; letter-spacing:.04em; text-transform:uppercase;
+  padding:12px 24px; border-radius:var(--r-card);
+  border:var(--pop-border); box-shadow:var(--pop-shadow-sm);
+  text-decoration:none;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.nav-cta:hover{ transform:translate(-2px,-2px); box-shadow:var(--pop-shadow); text-decoration:none; }
+
+.hamburger{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
+.hamburger span{ display:block; width:24px; height:3px; background:var(--on-surface); margin:5px 0; border-radius:2px; transition:transform .3s ease, opacity .3s ease; }
+.hamburger.active span:nth-child(1){ transform:rotate(45deg) translate(5px,6px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform:rotate(-45deg) translate(5px,-6px); }
+
+@media(max-width:768px){
+  .nav-links, .nav-cta{ display:none; }
+  .hamburger{ display:block; }
+  .nav-links.open{
+    display:flex; flex-direction:column;
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--surface); border-bottom:var(--pop-border);
+    padding:24px; gap:16px;
+  }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100svh;
+  display:flex; align-items:center;
+  padding:120px var(--gutter) var(--section);
+  background:var(--surface);
+  position:relative; overflow:hidden;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:url('assets/img/textura2.jpg') center/cover no-repeat;
+  opacity:.15; mix-blend-mode:multiply;
+}
+.hero__inner{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:1fr; gap:40px;
+  align-items:center; width:100%; max-width:var(--content-max); margin:0 auto;
+}
+.hero__text{ text-align:center; }
+.hero__greeting{
+  font-size:clamp(1rem,2vw,1.25rem); font-weight:600;
+  color:var(--secondary); margin-bottom:8px;
+}
+.hero__name{
+  font-family:"Filson Soft",sans-serif;
+  font-size:clamp(2.5rem,8vw,5rem); font-weight:800;
+  line-height:.95; letter-spacing:-.02em;
+}
+.hero__role{
+  font-size:clamp(1rem,2.4vw,1.6rem); font-weight:800;
+  background:var(--secondary); color:var(--on-surface);
+  display:inline-block; padding:8px 20px; margin-top:16px;
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  transform:rotate(-1deg);
+}
+.hero__desc{
+  font-size:clamp(1rem,2vw,1.15rem); line-height:1.6;
+  margin-top:20px; max-width:52ch; margin-inline:auto;
+}
+.hero__actions{ display:flex; gap:16px; margin-top:28px; justify-content:center; flex-wrap:wrap; }
+.hero__photo{
+  display:flex; justify-content:center;
+}
+.hero__photo-img{
+  width:240px; height:240px; border-radius:50%;
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  object-fit:cover;
+}
+.hero__socials{
+  display:flex; gap:12px; justify-content:center; margin-top:24px;
+}
+.hero__socials a{
+  width:44px; height:44px; border-radius:50%;
+  background:var(--primary); color:var(--on-surface);
+  border:var(--pop-border-thin); box-shadow:var(--pop-shadow-sm);
+  display:grid; place-items:center;
+  font-size:18px; text-decoration:none;
+  transition:transform .2s var(--ease);
+}
+.hero__socials a:hover{ transform:translate(-2px,-2px); text-decoration:none; }
+
+@media(min-width:768px){
+  .hero__inner{ grid-template-columns:1fr 1fr; text-align:left; }
+  .hero__text{ text-align:left; }
+  .hero__desc{ margin-inline:0; }
+  .hero__actions{ justify-content:flex-start; }
+  .hero__socials{ justify-content:flex-start; }
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:"Filson Soft",sans-serif;
+  font-size:15px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  padding:14px 28px; border-radius:var(--r-card);
+  border:var(--pop-border); cursor:pointer;
+  text-decoration:none;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.btn:hover{ transform:translate(-2px,-2px); box-shadow:var(--pop-shadow); text-decoration:none; }
+.btn--primary{ background:var(--primary); color:var(--on-surface); }
+.btn--secondary{ background:var(--secondary); color:var(--on-surface); }
+.btn svg{ width:16px; height:16px; }
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.section{ position:relative; padding:var(--section) 0; overflow:hidden; }
+.section--surface{ background:var(--surface); }
+.section--primary{ background:var(--primary); }
+.section--secondary{ background:var(--secondary); }
+.section--dark{ background:var(--on-surface); color:var(--surface); }
+.section--texture1{ background:var(--primary) url('assets/img/textura1.jpg') center/cover no-repeat; }
+.section--texture2{ background:var(--surface) url('assets/img/textura2.jpg') center/cover no-repeat; }
+
+.section__header{ margin-bottom:40px; }
+.section__kicker{
+  display:inline-block;
+  font-family:"Filson Soft",sans-serif; font-weight:800;
+  font-size:clamp(1rem,2.4vw,1.4rem); letter-spacing:.04em;
+  padding:10px 20px; margin-bottom:16px;
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  transform:rotate(-1deg);
+}
+.section__title{
+  font-family:"Filson Soft",sans-serif;
+  font-size:clamp(2rem,6vw,3.5rem); font-weight:800;
+  line-height:1; letter-spacing:-.02em;
+}
+
+/* ============================================================
+   SOBRE MÍ
+   ============================================================ */
+.about__content{
+  display:grid; grid-template-columns:1fr; gap:40px;
+  align-items:center;
+}
+.about__text p{ margin-top:16px; font-size:1.05rem; line-height:1.7; }
+
+@media(min-width:768px){
+  .about__content{ grid-template-columns:1fr 1fr; }
+}
+
+/* ============================================================
+   FORMACIÓN
+   ============================================================ */
+.edu-list{ display:grid; gap:20px; }
+.edu-item{
+  padding:24px;
+  background:var(--surface); color:var(--on-surface);
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start;
+}
+.edu-item__icon{
+  width:48px; height:48px; border-radius:50%;
+  background:var(--primary); color:var(--on-surface);
+  border:var(--pop-border-thin);
+  display:grid; place-items:center; font-size:20px;
+}
+.edu-item__title{ font-weight:700; font-size:1.1rem; }
+.edu-item__school{ font-size:.95rem; opacity:.8; }
+
+/* ============================================================
+   TRABAJOS
+   ============================================================ */
+.works-grid{ display:grid; gap:24px; }
+.work-card{
+  padding:28px;
+  background:var(--surface); color:var(--on-surface);
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  transition:transform .3s var(--ease);
+}
+.work-card:hover{ transform:rotate(-1deg) translate(-2px,-2px); }
+.work-card__tag{
+  display:inline-block;
+  background:var(--secondary); color:var(--on-surface);
+  font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  padding:4px 12px; margin-bottom:12px;
+  border:var(--pop-border-thin);
+}
+.work-card__title{
+  font-family:"Filson Soft",sans-serif;
+  font-size:1.3rem; font-weight:800; margin-bottom:8px;
+}
+.work-card__desc{ font-size:.95rem; line-height:1.6; }
+
+@media(min-width:768px){
+  .works-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media(min-width:1024px){
+  .works-grid{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ============================================================
+   HABILIDADES
+   ============================================================ */
+.skills-grid{ display:grid; gap:16px; }
+.skill-item{
+  display:flex; align-items:center; gap:16px;
+  padding:16px 20px;
+  background:rgba(255,255,255,.5); color:var(--on-surface);
+  border:var(--pop-border-thin);
+  transition:transform .2s var(--ease);
+}
+.skill-item:hover{ transform:translateX(4px); }
+.skill-item__icon{
+  width:40px; height:40px; border-radius:50%;
+  background:var(--primary); color:var(--on-surface);
+  border:var(--pop-border-thin);
+  display:grid; place-items:center; font-size:18px; flex-shrink:0;
+}
+.skill-item__label{ font-weight:600; font-size:1rem; }
+
+@media(min-width:600px){
+  .skills-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media(min-width:1024px){
+  .skills-grid{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ============================================================
+   EXTRAS
+   ============================================================ */
+.extras-grid{ display:grid; gap:24px; }
+.extra-card{
+  background:var(--surface); color:var(--on-surface);
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  overflow:hidden;
+  transition:transform .3s var(--ease);
+}
+.extra-card:hover{ transform:rotate(-1deg) translate(-2px,-2px); }
+.extra-card__media{
+  width:100%; aspect-ratio:16/9; object-fit:cover;
+  border-bottom:var(--pop-border);
+  display:block;
+}
+.extra-card__body{ padding:20px; }
+.extra-card__title{
+  font-family:"Filson Soft",sans-serif;
+  font-weight:800; font-size:1.1rem; margin-bottom:4px;
+}
+.extra-card__desc{ font-size:.9rem; line-height:1.5; }
+
+@media(min-width:768px){
+  .extras-grid{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+.contact-grid{ display:grid; gap:16px; }
+.contact-btn{
+  display:flex; align-items:center; gap:12px;
+  padding:16px 24px;
+  background:var(--surface); color:var(--on-surface);
+  border:var(--pop-border); box-shadow:var(--pop-shadow);
+  font-weight:600; font-size:1rem;
+  text-decoration:none;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.contact-btn:hover{ transform:translate(-2px,-2px); box-shadow:var(--pop-shadow); text-decoration:none; }
+.contact-btn__icon{
+  width:40px; height:40px; border-radius:50%;
+  background:var(--secondary); color:var(--on-surface);
+  border:var(--pop-border-thin);
+  display:grid; place-items:center; font-size:18px; flex-shrink:0;
+}
+
+@media(min-width:600px){
+  .contact-grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{
+  padding:60px var(--gutter) 40px;
+  background:var(--on-surface); color:var(--surface);
+  text-align:center;
+}
+.footer__name{
+  font-family:"Filson Soft",sans-serif;
+  font-size:clamp(2rem,5vw,3rem); font-weight:800;
+  margin-bottom:8px;
+}
+.footer__phrase{ font-size:1.1rem; opacity:.8; margin-bottom:24px; }
+.footer__socials{ display:flex; gap:12px; justify-content:center; }
+.footer__socials a{
+  width:44px; height:44px; border-radius:50%;
+  background:var(--primary); color:var(--on-surface);
+  border:2px solid var(--surface);
+  display:grid; place-items:center; font-size:18px;
+  text-decoration:none;
+  transition:transform .2s var(--ease);
+}
+.footer__socials a:hover{ transform:translateY(-3px); text-decoration:none; }
+.footer__copy{ margin-top:32px; font-size:12px; opacity:.5; }
+
+/* ============================================================
+   REVEAL ANIMATIONS
+   ============================================================ */
+.reveal{ opacity:0; transform:translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+@media(prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  html{ scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="site-nav" aria-label="Navegación principal">
+  <a href="#inicio" class="nav-logo">
+    <span class="nav-logo__badge" aria-hidden="true">KGR</span>
+    <span class="nav-logo__name">Koko</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sobremi">Hey</a></li>
+    <li><a href="#formacion">Formación</a></li>
+    <li><a href="#trabajos">Trabajos</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#extras">Extras</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Explorar <span aria-hidden="true">→</span></a>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="inicio" class="hero">
+  <div class="hero__inner">
+    <div class="hero__text">
+      <p class="hero__greeting">Hola, soy tu diseñadora creativa.</p>
+      <h1 class="hero__name">Karina Gutiérrez</h1>
+      <span class="hero__role">Diseñadora Gráfica y Digital — Enfocada en UX-UI</span>
+      <p class="hero__desc">Me interesa crear experiencias visuales que conecten con las personas. Soy estudiante de Diseño Gráfico y estoy profundizando en el área de UX-UI.</p>
+      <div class="hero__actions">
+        <a href="#contacto" class="btn btn--primary">Contáctame <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#extras" class="btn btn--secondary">Mis trabajos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="hero__socials">
+        <a href="https://www.linkedin.com/in/karina-gutiérrez-78172030a" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+        <a href="https://www.instagram.com/kokosweb" aria-label="Instagram" target="_blank" rel="noopener">ig</a>
+      </div>
+    </div>
+    <div class="hero__photo">
+      <img src="assets/img/IMG_FOTO.jpg" alt="Foto de Karina Gutiérrez Rangel" class="hero__photo-img">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOBRE MÍ
+     ============================================================ -->
+<section id="sobremi" class="section section--primary">
+  <div class="texture texture--diags" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--secondary); color:var(--on-surface);">parada 01</span>
+      <h2 class="section__title reveal">Hey</h2>
+    </div>
+    <div class="about__content">
+      <div class="about__text reveal">
+        <p>Soy <strong>Karina Gutiérrez</strong>, pero el mundo me conoce como <strong>Koko</strong>. Nací en la CDMX y aquí planeo quedarme.</p>
+        <p>Soy una estudiante de Diseño Gráfico y digital. Hago ilustración, disfruto del diseño editorial y estoy profundizando en el área de UX-UI.</p>
+        <p>Mi desempeño se muestra en la creatividad e ideas que surgen. Disfruto mucho de los medios audiovisuales y siempre aspiro a conocer más.</p>
+      </div>
+      <div class="about__photo reveal">
+        <img src="assets/img/textura1.jpg" alt="Textura decorativa" style="width:100%; border:var(--pop-border); box-shadow:var(--pop-shadow);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FORMACIÓN
+     ============================================================ -->
+<section id="formacion" class="section section--texture1">
+  <div class="texture texture--lines" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--surface); color:var(--on-surface);">parada 02</span>
+      <h2 class="section__title reveal">Formación</h2>
+    </div>
+    <div class="edu-list">
+      <article class="edu-item reveal">
+        <span class="edu-item__icon" aria-hidden="true">✦</span>
+        <div>
+          <h3 class="edu-item__title">Diseño Gráfico y Digital</h3>
+          <p class="edu-item__school">Universidad La Salle</p>
+        </div>
+      </article>
+      <article class="edu-item reveal">
+        <span class="edu-item__icon" aria-hidden="true">✦</span>
+        <div>
+          <h3 class="edu-item__title">Servicio Social Mentorías</h3>
+          <p class="edu-item__school">Universidad La Salle</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRABAJOS
+     ============================================================ -->
+<section id="trabajos" class="section section--surface">
+  <div class="texture texture--cross" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--primary); color:var(--on-surface);">parada 03</span>
+      <h2 class="section__title reveal">Trabajos</h2>
+    </div>
+    <div class="works-grid">
+      <article class="work-card reveal">
+        <span class="work-card__tag">Campaña</span>
+        <h3 class="work-card__title">Campaña de Producto</h3>
+        <p class="work-card__desc">Introducción de un nuevo Jugo al mercado.</p>
+      </article>
+      <article class="work-card reveal">
+        <span class="work-card__tag">Festival</span>
+        <h3 class="work-card__title">Campañas — Festival</h3>
+        <p class="work-card__desc">Campaña integral para Fotogenia, festival internacional de cinepoesía y narrativas divergentes en CDMX. El concepto "Otras formas de sentir" reposiciona la neurodivergencia como puerta de entrada al cine experimental. Cinco medios de comunicación: redes sociales, Metro CDMX, mupis, carteles y volantes.</p>
+      </article>
+      <article class="work-card reveal">
+        <span class="work-card__tag">Empaque</span>
+        <h3 class="work-card__title">Empaque — Recipientes Metálicos</h3>
+        <p class="work-card__desc">Raid presenta una línea de insecticidas de uso doméstico diseñada para ofrecer control total en la cocina, combinando eficacia, seguridad y una identidad visual contundente. Familia de envases metálicos que proyecta una imagen unificada de fuerza, protección y confianza.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HABILIDADES
+     ============================================================ -->
+<section id="habilidades" class="section section--primary">
+  <div class="texture texture--dots" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--secondary); color:var(--on-surface);">parada 04</span>
+      <h2 class="section__title reveal">Habilidades</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item reveal">
+        <span class="skill-item__icon" aria-hidden="true">◆</span>
+        <span class="skill-item__label">Diseño UX/UI, maquetado web</span>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-item__icon" aria-hidden="true">✦</span>
+        <span class="skill-item__label">Ilustración</span>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-item__icon" aria-hidden="true">★</span>
+        <span class="skill-item__label">Herramientas de inteligencia artificial</span>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-item__icon" aria-hidden="true">♥</span>
+        <span class="skill-item__label">Creatividad y empatía digital</span>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-item__icon" aria-hidden="true">→</span>
+        <span class="skill-item__label">Inglés Intermedio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EXTRAS
+     ============================================================ -->
+<section id="extras" class="section section--texture2">
+  <div class="texture texture--waves" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--primary); color:var(--on-surface);">parada 05</span>
+      <h2 class="section__title reveal">Extras</h2>
+    </div>
+    <div class="extras-grid">
+      <article class="extra-card reveal">
+        <video src="assets/video/turntable1.mp4" class="extra-card__media" autoplay loop muted playsinline></video>
+        <div class="extra-card__body">
+          <h3 class="extra-card__title">Modelado Personaje</h3>
+          <p class="extra-card__desc">Modelado 3D — Turntable</p>
+        </div>
+      </article>
+      <article class="extra-card reveal">
+        <video src="assets/video/TDA_P1_VIDEO.mp4" class="extra-card__media" autoplay loop muted playsinline></video>
+        <div class="extra-card__body">
+          <h3 class="extra-card__title">Tipognoma</h3>
+          <p class="extra-card__desc">Proyecto de tipografía experimental</p>
+        </div>
+      </article>
+      <article class="extra-card reveal">
+        <video src="assets/video/ABSOLUTE_VODKA_1.mp4" class="extra-card__media" autoplay loop muted playsinline></video>
+        <div class="extra-card__body">
+          <h3 class="extra-card__title">Anuncio en Redes Sociales</h3>
+          <p class="extra-card__desc">Campaña para Absolute Vodka</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACTO
+     ============================================================ -->
+<section id="contacto" class="section section--secondary">
+  <div class="texture texture--diags" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section__header">
+      <span class="section__kicker" style="background:var(--surface); color:var(--on-surface);">parada 06</span>
+      <h2 class="section__title reveal">Contacto</h2>
+    </div>
+    <div class="contact-grid">
+      <a href="mailto:karinagut404@gmail.com" class="contact-btn reveal">
+        <span class="contact-btn__icon" aria-hidden="true">✉</span>
+        <span>karinagut404@gmail.com</span>
+      </a>
+      <a href="tel:+525541852195" class="contact-btn reveal">
+        <span class="contact-btn__icon" aria-hidden="true">☎</span>
+        <span>+52 5541 852195</span>
+      </a>
+      <a href="https://www.linkedin.com/in/karina-gutiérrez-78172030a" class="contact-btn reveal" target="_blank" rel="noopener">
+        <span class="contact-btn__icon" aria-hidden="true">in</span>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://www.instagram.com/kokosweb" class="contact-btn reveal" target="_blank" rel="noopener">
+        <span class="contact-btn__icon" aria-hidden="true">ig</span>
+        <span>Instagram</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer" style="position:relative; overflow:hidden;">
+  <div class="texture texture--dots" aria-hidden="true" style="opacity:.08;"></div>
+  <p class="footer__name">Kokos</p>
+  <p class="footer__phrase">"La creatividad sigue expandiéndose"</p>
+  <div class="footer__socials">
+    <a href="https://www.linkedin.com/in/karina-gutiérrez-78172030a" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+    <a href="https://www.instagram.com/kokosweb" aria-label="Instagram" target="_blank" rel="noopener">ig</a>
+  </div>
+  <p class="footer__copy">© 2026 Karina Gutiérrez Rangel — Koko</p>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function(){
+  /* Hamburger menu */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', function(){
+    const open = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* Reveal on scroll */
+  var reveals = document.querySelectorAll('.reveal');
+  function checkReveal(){
+    var wh = window.innerHeight;
+    reveals.forEach(function(el){
+      var top = el.getBoundingClientRect().top;
+      if(top < wh - 60){
+        el.classList.add('in');
+      }
+    });
+  }
+  window.addEventListener('scroll', checkReveal, {passive:true});
+  checkReveal();
+})();
+</script>
+
+</body>
+</html>

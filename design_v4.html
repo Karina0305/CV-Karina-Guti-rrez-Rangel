@@ -14,11 +14,11 @@
      TOKENS — DESIGN_v4.md
      ============================================================ */
   :root{
-    --primary:     #A31262; /* Fiusha oscuro — guía Sistema_Diseño_KGR */
-    --secondary:   #2F5FD6; /* Azul */
-    --verde:       #3E8E5A; /* Verde restaurado (se elimina naranja #E85D24) */
-    --on-surface:  #111111; /* Tinta */
-    --surface:     #FAF7F2; /* Papel 70-80% layout */
+    --primary:     #A31262;
+    --secondary:   #2F5FD6;
+    --verde:       #3E8E5A;
+    --on-surface:  #111111;
+    --surface:     #FAF7F2;
     --link:        #2F5FD6;
     --btn-sec:     #2F5FD6;
     --text-tert:   #8A8278;
@@ -48,7 +48,6 @@
   @font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Regular.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
   @font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Medium.woff2") format("woff2"); font-weight:500; font-style:normal; font-display:swap; }
   @font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Bold.woff2") format("woff2"); font-weight:700; font-style:normal; font-display:swap; }
-  @font-face{ font-family:"Filson Soft"; src:url("assets/fonts/WOFF2/Filson-Soft-Book.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
 
   *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; }
@@ -64,9 +63,6 @@
   ::selection{ background:var(--primary); color:#fff; }
   .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
 
-  /* ============================================================
-     GRAIN OVERLAY
-     ============================================================ */
   body::after{
     content:""; position:fixed; inset:0; z-index:999; pointer-events:none;
     opacity:.04; mix-blend-mode:multiply;
@@ -74,7 +70,230 @@
     background-size:128px 128px;
   }
 
-  /* REST OF CSS CONTINUES... */
+  .top-nav{
+    position:fixed; top:0; left:0; right:0; z-index:120;
+    background:transparent; pointer-events:none;
+  }
+  .top-nav .container{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; padding:20px clamp(16px,4vw,44px); min-height:72px;
+    pointer-events:auto;
+  }
+  .top-nav__logo{
+    width:48px; height:48px; border-radius:50%;
+    background:var(--surface); border:var(--pop-border);
+    box-shadow:var(--pop-shadow-sm);
+    display:grid; place-items:center;
+    text-decoration:none; flex-shrink:0;
+    transition:transform .3s var(--ease);
+  }
+  .top-nav__logo:hover{ transform:rotate(-6deg) scale(1.08); }
+  .top-nav__logo-text{
+    font-family:"Filson Soft",sans-serif; font-size:13px; font-weight:800;
+    color:var(--on-surface); letter-spacing:.02em;
+  }
+  .top-nav__links{
+    list-style:none; display:flex; flex-wrap:wrap; gap:clamp(14px,2vw,32px);
+    justify-content:center; flex:1;
+  }
+  .top-nav__links a{
+    color:var(--on-surface); text-decoration:none;
+    font-family:"Filson Soft",sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    position:relative; padding-bottom:4px;
+  }
+  .top-nav__links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+    background:var(--secondary); transform:scaleX(0); transform-origin:right;
+    transition:transform .4s var(--ease);
+  }
+  .top-nav__links a:hover::after{ transform:scaleX(1); transform-origin:left; }
+  .top-nav__action{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--secondary); color:var(--surface);
+    font-family:"Filson Soft",sans-serif; font-size:12px; font-weight:800;
+    letter-spacing:.04em; text-transform:uppercase;
+    padding:10px 22px; border-radius:var(--r-pill);
+    border:var(--pop-border); box-shadow:var(--pop-shadow-sm);
+    cursor:pointer; text-decoration:none; white-space:nowrap; flex-shrink:0;
+    transition:transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease;
+  }
+  .top-nav__action:hover{
+    transform:translate(-2px,-2px); box-shadow:var(--pop-shadow);
+    background:var(--primary); color:#fff;
+  }
+  .top-nav__action svg{ width:14px; height:14px; flex-shrink:0; }
+
+  @media(max-width:760px){
+    .top-nav__links{ display:none; }
+    .top-nav__logo{ width:42px; height:42px; }
+  }
+
+  .hero{
+    position:relative; min-height:100svh;
+    display:flex; align-items:center; justify-content:center;
+    padding:120px var(--gutter) 60px;
+    background:var(--surface); overflow:hidden; color:var(--on-surface);
+  }
+  .hero__inner{ position:relative; z-index:2; text-align:center; max-width:800px; }
+  .hero .hero__title{ color:var(--on-surface); position:relative; }
+  .hero .hero__sub{ color:var(--on-surface); opacity:.88; }
+  .hero__kicker{
+    display:inline-block;
+    background:var(--secondary); color:var(--surface);
+    font-family:"Filson Soft",sans-serif; font-weight:800;
+    font-size:clamp(1rem,2.4vw,1.6rem); letter-spacing:.04em;
+    padding:12px 24px 14px; border-radius:var(--r-kicker);
+    border:var(--pop-border); box-shadow:var(--pop-shadow);
+    transform:rotate(-2deg);
+  }
+  .hero__title{
+    font-family:"Filson Soft",sans-serif;
+    font-size:clamp(46px,7.5vw,86px); font-weight:900;
+    line-height:.94; letter-spacing:-.02em;
+    margin-top:24px;
+  }
+  .hero__sub{
+    font-size:clamp(1rem,2vw,1.25rem); line-height:1.6;
+    margin-top:20px; max-width:52ch; margin-inline:auto;
+    color:#fff;
+  }
+
+  .zona{ position:relative; padding:var(--section) 0; overflow:hidden; }
+  .zona--pink{ background:var(--primary); color:#fff; }
+  #tipografia{ background:var(--surface); color:var(--on-surface); position:relative; }
+  #formas{ background:var(--surface); color:var(--on-surface); position:relative; }
+  .zona--teal{ background:var(--secondary); color:var(--surface); }
+  .zona--navy{ background:var(--on-surface); color:var(--surface); }
+  .zona--surface{ background:var(--surface); color:var(--on-surface); }
+
+  .container{ max-width:var(--content-max); margin:0 auto; padding:0 var(--gutter); position:relative; z-index:2; }
+  section[id]{ scroll-margin-top:0; }
+
+  .kicker{
+    display:inline-block;
+    font-family:"Filson Soft",sans-serif; font-weight:800;
+    font-size:clamp(1.4rem,3.4vw,2.4rem); letter-spacing:.04em;
+    padding:14px 26px 18px; border-radius:var(--r-kicker);
+    border:var(--pop-border); box-shadow:var(--pop-shadow);
+    transform:rotate(-2deg);
+    margin-bottom:40px;
+  }
+  .kicker--pink{ background:var(--primary); color:#fff; }
+  .kicker--teal{ background:var(--secondary); color:var(--surface); }
+  .kicker--navy{ background:var(--on-surface); color:var(--surface); }
+  .kicker--surface{ background:var(--surface); color:var(--on-surface); }
+
+  .section-title{
+    font-family:"Filson Soft",sans-serif;
+    font-size:clamp(46px,7.5vw,86px); font-weight:900;
+    line-height:1.05; margin-bottom:20px;
+  }
+  .section-desc{ font-size:1.1rem; max-width:60ch; margin-bottom:40px; }
+
+  .palette-grid{ list-style:none; display:grid; grid-template-columns:repeat(5,1fr); gap:18px; }
+  @media(max-width:1100px){ .palette-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:640px){ .palette-grid{ grid-template-columns:1fr; } }
+  .palette-card{ border:1.5px solid var(--on-surface); border-radius:12px; overflow:hidden; background:var(--surface); display:flex; flex-direction:column; color:var(--on-surface); }
+  .palette-card__swatch{ height:110px; border-bottom:1.5px solid var(--on-surface); }
+  .palette-card__body{ padding:16px; display:grid; gap:10px; }
+  .palette-card__name{ font-family:"Filson Soft",sans-serif; font-size:1rem; font-weight:800; text-transform:uppercase; letter-spacing:.02em; }
+  .palette-card__hex{ display:inline-flex; align-items:center; justify-content:center; background:var(--on-surface); color:#fff; font-family:Consolas,monospace; font-size:11px; font-weight:700; padding:5px 10px; border-radius:999px; border:none; cursor:pointer; width:max-content; }
+  .palette-card__hex:hover{ background:#222; }
+  .palette-card__desc{ font-size:13px; line-height:1.5; opacity:.85; }
+
+  .family-grid{ display:grid; gap:16px; grid-template-columns:repeat(4,1fr); margin-bottom:40px; }
+  @media(max-width:900px){ .family-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:520px){ .family-grid{ grid-template-columns:1fr; } }
+  .weight-card{
+    background:var(--surface); border:1.5px solid var(--on-surface); border-radius:14px;
+    padding:20px; text-align:center; color:var(--on-surface);
+  }
+  .weight-card .sample{ font-size:3rem; line-height:1; font-family:"Filson Soft",sans-serif; }
+  .weight-card .meta{ font-family:"Filson Soft",sans-serif; font-size:12px; font-weight:700; margin-top:8px; opacity:.7; }
+
+  .scale{ list-style:none; }
+  .scale li{
+    display:grid; grid-template-columns:1fr auto; align-items:center; gap:16px;
+    padding:14px 0; border-bottom:var(--pop-border-thin);
+  }
+  .scale li .meta{ text-align:right; font-size:12px; font-family:"Filson Soft",sans-serif; font-weight:700; white-space:nowrap; opacity:.7; }
+
+  .card{
+    border:1.5px solid var(--on-surface); border-radius:14px;
+    padding:24px;
+    background:var(--primary); color:#fff;
+    display:grid; gap:12px; align-content:start;
+  }
+  .card--teal{ background:var(--secondary); color:var(--surface); }
+  .card h4{ font-family:"Filson Soft",sans-serif; font-size:1.2rem; font-weight:800; }
+  .card p{ font-size:14px; line-height:1.7; }
+
+  .spacing-scale{ list-style:none; display:grid; gap:8px; margin-top:24px; }
+  .spacing-scale li{ display:grid; grid-template-columns:120px 1fr auto; align-items:center; gap:8px; font-size:13px; }
+  .spacing-scale .bar{ background:var(--on-surface); border-radius:2px; height:16px; width:var(--w,8px); min-width:4px; }
+
+  .measure-bar{ margin-top:24px; }
+  .measure-bar .bar{
+    height:36px; background:var(--secondary); color:var(--surface);
+    display:flex; align-items:center; justify-content:flex-end;
+    padding-inline:14px; font-family:"Filson Soft",sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    border:var(--pop-border); border-radius:var(--r-card);
+  }
+
+  .comp-block{
+    position:relative; overflow:hidden; isolation:isolate;
+    background:var(--surface); border:1.5px solid var(--on-surface); border-radius:14px;
+    padding:28px; margin-bottom:22px; color:var(--surface);
+  }
+  .comp-block > *{ position:relative; z-index:1; }
+  .comp-block > .t-h3{ margin-bottom:14px; font-family:"Filson Soft",sans-serif; font-weight:800; font-size:1.3rem; color:var(--on-surface); }
+  .comp-block .desc{ font-size:13px; line-height:1.7; opacity:.85; margin-bottom:18px; color:var(--on-surface); }
+
+  .btn-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:1.5px solid var(--on-surface); cursor:pointer;
+    font-family:"Neue Haas Grotesk Display Pro","Filson Soft",sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:13px 26px; border-radius:var(--r-pill);
+    text-decoration:none;
+    transition:background .2s ease, color .2s ease;
+  }
+  .btn--primary{ background:var(--on-surface); color:var(--surface); }
+  .btn--primary:hover{ background:var(--surface); color:var(--on-surface); }
+  .btn--secondary{ background:transparent; color:var(--on-surface); }
+  .btn--secondary:hover{ background:var(--on-surface); color:var(--surface); }
+  .comp-block .btn--primary{ background:var(--secondary); color:#fff; }
+  .comp-block .btn--primary:hover{ background:var(--surface); color:var(--secondary); }
+  .comp-block .btn--secondary{ background:var(--secondary); color:#fff; }
+  .comp-block .btn--secondary:hover{ background:var(--surface); color:var(--secondary); }
+
+  .rules-grid{ display:grid; gap:40px; grid-template-columns:1fr 1fr; align-items:start; }
+  @media(max-width:860px){ .rules-grid{ grid-template-columns:1fr; } }
+  .rules h3{ margin-bottom:16px; font-family:"Filson Soft",sans-serif; font-weight:800; font-size:1.3rem; }
+  .rules ul{ list-style:none; display:grid; gap:10px; }
+  .rules li{ font-size:15px; line-height:1.6; padding-left:30px; position:relative; }
+  .rules--yes li::before{ content:"✓"; position:absolute; left:0; top:0; font-weight:800; color:var(--primary); font-size:18px; }
+  .rules--no li::before{ content:"✕"; position:absolute; left:2px; top:0; color:var(--primary); font-size:18px; font-weight:800; }
+
+  .site-footer{
+    background:var(--surface);
+    color:var(--on-surface);
+    padding:96px 0 70px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .site-footer h3{ font-family:"Filson Soft",sans-serif; font-weight:800; font-size:clamp(1.5rem,4vw,2.5rem); margin-bottom:8px; }
+  .site-footer p{ font-size:13px; opacity:.7; }
+  .site-footer .footer-copy{ margin-top:44px; font-size:12px; opacity:.55; position:relative; z-index:2; }
+
+  .reveal{ opacity:0; transform:translateY(40px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media(prefers-reduced-motion:reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
 </style>
 </head>
 <body>
@@ -96,7 +315,143 @@
   </div>
 </nav>
 
-<!-- HTML CONTENT CONTINUES... -->
+<section class="hero" id="top">
+  <div class="hero__inner">
+    <span class="hero__kicker">festival urbano · recorrido por zonas</span>
+    <h1 class="hero__title">Mi Sistema<br>de Diseño</h1>
+    <p class="hero__sub">Cada zona es una parada autocontenida con su combinación de color, fotografía intervenida y tipografía protagonista. Inspirado en KAWAII 2026 de ASOBISYSTEM.</p>
+  </div>
+</section>
+
+<section id="paleta" class="zona zona--surface">
+  <div class="container">
+    <span class="kicker kicker--surface">parada 01</span>
+    <h2 class="section-title reveal">Paleta de color</h2>
+    <p class="section-desc reveal">Un rosa de marca sobre una base de neutros de alto contraste, con azul oscuro como contrapunto.</p>
+    <ul class="palette-grid reveal">
+      <li class="palette-card">
+        <div class="palette-card__swatch" style="background:#A31262;"></div>
+        <div class="palette-card__body">
+          <span class="palette-card__name">Fiusha</span>
+          <button type="button" class="palette-card__hex" data-copy="#A31262">#A31262</button>
+          <p class="palette-card__desc">Principal de marca · CTA, acento tipográfico.</p>
+        </div>
+      </li>
+      <li class="palette-card">
+        <div class="palette-card__swatch" style="background:#2F5FD6;"></div>
+        <div class="palette-card__body">
+          <span class="palette-card__name">Azul</span>
+          <button type="button" class="palette-card__hex" data-copy="#2F5FD6">#2F5FD6</button>
+          <p class="palette-card__desc">Acento secundario · eyebrows, categorías.</p>
+        </div>
+      </li>
+      <li class="palette-card">
+        <div class="palette-card__swatch" style="background:#111111;"></div>
+        <div class="palette-card__body">
+          <span class="palette-card__name">Tinta</span>
+          <button type="button" class="palette-card__hex" data-copy="#111111">#111111</button>
+          <p class="palette-card__desc">Texto principal y mayor contraste.</p>
+        </div>
+      </li>
+      <li class="palette-card">
+        <div class="palette-card__swatch" style="background:#FAF7F2;"></div>
+        <div class="palette-card__body">
+          <span class="palette-card__name">Papel</span>
+          <button type="button" class="palette-card__hex" data-copy="#FAF7F2">#FAF7F2</button>
+          <p class="palette-card__desc">Fondo dominante (70–80%).</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="tipografia" class="zona zona--pink">
+  <div class="container">
+    <span class="kicker kicker--pink">parada 02</span>
+    <h2 class="section-title reveal">Tipografía</h2>
+    <p class="section-desc reveal">Neue Haas Grotesk Display Pro para cuerpo y Filson Soft para títulos.</p>
+    <div class="family-grid reveal">
+      <div class="weight-card"><div class="sample" style="font-weight:400;">Aa</div><div class="meta">Regular · 400</div></div>
+      <div class="weight-card"><div class="sample" style="font-weight:500;">Aa</div><div class="meta">Medium · 500</div></div>
+      <div class="weight-card"><div class="sample" style="font-weight:600;">Aa</div><div class="meta">SemiBold · 600</div></div>
+      <div class="weight-card"><div class="sample" style="font-weight:700;">Aa</div><div class="meta">Bold · 700</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="componentes" class="zona zona--surface">
+  <div class="container">
+    <span class="kicker kicker--surface">parada 06</span>
+    <h2 class="section-title reveal">Componentes</h2>
+    <p class="section-desc reveal">Botones, enlaces y tarjetas del sistema.</p>
+
+    <div class="comp-block reveal">
+      <h3 class="t-h3">Botones</h3>
+      <p class="desc">Borde negro 3px, sombra hard offset, hover levanta.</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn--primary">Primario</button>
+        <button type="button" class="btn btn--secondary">Secundario</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sino" class="zona zona--navy">
+  <div class="container">
+    <span class="kicker" style="background:var(--primary);color:#fff;">parada 07</span>
+    <h2 class="section-title reveal">Reglas · Sí y No</h2>
+    <div class="rules-grid">
+      <div class="rules rules--yes reveal">
+        <h3>Sí</h3>
+        <ul>
+          <li>Organiza en zonas autocontenidas con su combinación de color.</li>
+          <li>Usa directorio de navegación para orientar el recorrido.</li>
+          <li>Trata fotografía con duotono de marca.</li>
+          <li>Permite inclinaciones y superposiciones (collage).</li>
+          <li>Reserva recortes orgánicos solo para fotografía.</li>
+        </ul>
+      </div>
+      <div class="rules rules--no reveal">
+        <h3>No</h3>
+        <ul>
+          <li>No uses degradados suaves ni sombras difusas.</li>
+          <li>No repitas combinación de color en zonas consecutivas.</li>
+          <li>No apliques formas orgánicas a componentes funcionales.</li>
+          <li>No uses fotografía sin intervenir.</li>
+          <li>No uses grises medios para texto de cuerpo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <h3>Suscríbete y recibe el sistema de diseño completo</h3>
+    <p class="footer-copy">Karina Gutiérrez Rangel · Sistema de Diseño v4 · Filson Soft + Neue Haas Grotesk Display Pro</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.palette-card__hex').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const hex = btn.dataset.copy;
+    navigator.clipboard.writeText(hex).then(() => {
+      console.log('Copiado:', hex);
+    });
+  });
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>

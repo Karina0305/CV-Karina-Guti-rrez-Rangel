@@ -19,7 +19,7 @@ Proyecto de diseño web que presenta el CV profesional de Karina Gutiérrez Rang
 ## Documentos
 
 - [Arquitectura-CVKARINA.docx](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/Arquitectura-CVKARINA.docx) — Documento de arquitectura del proyecto
-- [Mi_Sistema_de_Diseno_Karina.docx](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/Mi_Sistema_de_Diseno_Karina.docx) — Documento del sistema de diseño
+- [Sistema_Diseno_KGR.docx](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/Sistema_Diseno_KGR.docx) — Documento del sistema de diseño
 
 ---
 

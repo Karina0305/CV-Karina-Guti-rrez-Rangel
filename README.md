@@ -2,20 +2,18 @@
 
 **Primera entrega — Laboratorio de Tecnologías Emergentes**
 
-Proyecto de diseño web que presenta el CV profesional de Karina Gutiérrez Rangel, acompañado de un sistema de diseño propio. El proyecto explora tecnologías web emergentes aplicadas a la creación de interfaces modernas, con una estética centrada en naranjas vibrantes y carbones profundos, tipografía con personalidad y layouts de estilo editorial modular.
+Proyecto de diseño web que presenta el CV profesional de Karina Gutiérrez Rangel, acompañado de un sistema de diseño propio. El proyecto explora tecnologías web emergentes aplicadas a la creación de experiencias visuales innovadoras.
 
 ---
 
 ## Páginas publicadas
 
 - [Página principal (CV)](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/)
-- [Design System](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/design.html)
 - [Design System v4](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/design_v4.html)
 
 ## Documentación del proyecto
 
-- [DESIGN.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/DESIGN.md) — Sistema de diseño completo
-- [DESIGN_v4.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/DESIGN_v4.md) — Sistema de diseño v4
+- [DESIGN_v4.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/DESIGN_v4.md) — Sistema de diseño completo (v4)
 - [CV.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/CV.md) — Contenido del CV en Markdown
 
 ## Documentos

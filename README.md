@@ -10,10 +10,12 @@ Proyecto de diseño web que presenta el CV profesional de Karina Gutiérrez Rang
 
 - [Página principal (CV)](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/)
 - [Design System](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/design.html)
+- [Design System v4](https://karina0305.github.io/CV-Karina-Guti-rrez-Rangel/design_v4.html)
 
 ## Documentación del proyecto
 
 - [DESIGN.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/DESIGN.md) — Sistema de diseño completo
+- [DESIGN_v4.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/DESIGN_v4.md) — Sistema de diseño v4
 - [CV.md](https://github.com/Karina0305/CV-Karina-Guti-rrez-Rangel/blob/main/CV.md) — Contenido del CV en Markdown
 
 ## Documentos
